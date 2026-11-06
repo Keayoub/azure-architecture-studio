@@ -51,14 +51,13 @@ found, finish Part 1 or correct the subscription/resource group.
 
 ## 2. Build both container images
 
-Local package commands and both Dockerfiles default to the Microsoft npm feed
-`https://packagefeedproxy.microsoft.io/npm/`. Docker installs the pinned
-`pnpm@9.15.9` with npm because this feed does not serve the version-specific
-metadata endpoint used by Corepack. TLS verification remains enabled.
+Local package commands and both Dockerfiles default to the public npm registry
+`https://registry.npmjs.org/`. Docker installs the pinned `pnpm@9.15.9` with npm.
+TLS verification remains enabled.
 To select another approved feed for a Docker build, pass
 `--build-arg NPM_REGISTRY=https://<registry-path>` (without a trailing slash).
-Existing lockfile tarball URLs remain in effect; a registry override does not
-rewrite them.
+The lockfile pins versions and integrity hashes without feed-specific tarball
+URLs, so dependency downloads use the selected registry.
 
 ACR builds from your local working directory, including uncommitted source
 changes not excluded from the build context. Use a reviewed checkout and do not

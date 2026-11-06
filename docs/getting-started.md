@@ -106,6 +106,10 @@ docker compose up --build
 AI env vars are read from your shell or `.env` and passed through to the API
 container (see [docker-compose.yml](../docker-compose.yml)).
 
+Builds download pnpm and dependencies from `https://registry.npmjs.org/`.
+To use another npm registry, set `NPM_REGISTRY` in your shell or `.env`;
+Compose passes it to both image builds.
+
 ## Verify your setup
 
 Run the workspace checks from the repo root:
@@ -128,6 +132,7 @@ All three should pass on a clean clone. The full script list is in
 | AI panels show a 503 / "not configured" hint | Expected when no AI endpoint is set. Fill in `.env` and restart `pnpm dev`. |
 | Keyless AI returns an auth error | Run `az login`, and confirm your identity has **Cognitive Services User** for Foundry `/models` inference, or **Cognitive Services OpenAI User** for Azure OpenAI endpoints. In Azure, grant the role to the API's managed identity instead of the signed-in visitor. |
 | `docker compose up` can't reach the API | The web container waits for the API health check; give it a few seconds on first build. |
+| Docker build fails with npm `ETIMEDOUT` | Ensure the build can reach the npm registry. Older checkouts defaulted to Microsoft's package proxy; update your checkout and rebuild. If your network requires a different registry, set `NPM_REGISTRY` in `.env`. |
 
 ## Next steps
 

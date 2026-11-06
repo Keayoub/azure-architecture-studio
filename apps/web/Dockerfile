@@ -2,7 +2,7 @@
 
 # ---- Base: pnpm on Node 22 ----------------------------------------------------
 FROM node:22-alpine AS base
-ARG NPM_REGISTRY=https://packagefeedproxy.microsoft.io/npm
+ARG NPM_REGISTRY=https://registry.npmjs.org
 ENV npm_config_registry=$NPM_REGISTRY
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
